@@ -33,6 +33,8 @@ interface Props<T> {
   pageSize?: number;
   footer?: ReactNode;
   label?: string;
+  /** Первая колонка остаётся на месте при прокрутке вбок. */
+  stickyFirst?: boolean;
 }
 
 type SortState = { key: string; dir: 'asc' | 'desc' } | null;
@@ -53,6 +55,7 @@ export function DataTable<T>({
   pageSize = 100,
   footer,
   label,
+  stickyFirst,
 }: Props<T>) {
   const [sort, setSort] = useState<SortState>(null);
   const [page, setPage] = useState(0);
@@ -96,7 +99,7 @@ export function DataTable<T>({
   return (
     <div className="table-block">
       <div className="table-wrap" style={maxHeight != null ? { maxHeight } : undefined}>
-        <table className="data" aria-label={label}>
+        <table className={'data' + (stickyFirst ? ' sticky-first' : '')} aria-label={label}>
           <thead>
             <tr>
               {columns.map((c) => {
@@ -105,7 +108,7 @@ export function DataTable<T>({
                   <th
                     key={c.key}
                     className={c.numeric ? 'num' : undefined}
-                    style={c.minWidth ? { minWidth: c.minWidth } : undefined}
+                    style={{ minWidth: c.minWidth ?? (c.wrap ? 170 : undefined) }}
                     aria-sort={dir === 'asc' ? 'ascending' : dir === 'desc' ? 'descending' : 'none'}
                   >
                     <button

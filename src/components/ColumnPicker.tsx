@@ -26,7 +26,7 @@ export function ColumnPicker({ headers, visible, onChange }: Props) {
           {shown}/{headers.length}
         </span>
       </PopoverButton>
-      <PopoverPanel anchor={{ to: 'bottom end', gap: 6 }} className="popover-panel">
+      <PopoverPanel anchor={{ to: 'bottom end', gap: 6, padding: 12 }} className="popover-panel">
         <div className="popover-actions">
           <button type="button" onClick={() => onChange(headers.map(() => true))}>
             Показать все

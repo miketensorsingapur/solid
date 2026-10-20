@@ -181,9 +181,6 @@ button {
   box-shadow: 0 1px 2px rgba(59, 91, 219, 0.35);
 }
 
-.btn-primary:hover {
-  background: var(--primary-hover);
-}
 
 .btn-outline {
   background: var(--surface);
@@ -191,11 +188,6 @@ button {
   border-color: var(--border-strong);
 }
 
-.btn-outline:hover {
-  background: var(--primary-soft);
-  border-color: var(--primary);
-  color: var(--primary);
-}
 
 .btn-ghost {
   background: var(--surface);
@@ -203,10 +195,6 @@ button {
   border-color: var(--border);
 }
 
-.btn-ghost:hover:not(:disabled) {
-  border-color: var(--border-strong);
-  background: #f7f8fb;
-}
 
 .btn:disabled {
   opacity: 0.45;
@@ -273,9 +261,6 @@ table.data th {
   cursor: pointer;
 }
 
-.th-btn:hover {
-  color: var(--text);
-}
 
 .th-btn.active {
   color: var(--primary);
@@ -316,18 +301,12 @@ table.data tbody tr:last-child td {
   border-bottom: 0;
 }
 
-table.data tbody tr:hover td {
-  background: #fafbff;
-}
 
 table.data tbody tr.row-assembly td {
   background: var(--assembly);
   font-weight: 600;
 }
 
-table.data tbody tr.row-assembly:hover td {
-  background: #eaeeff;
-}
 
 table.data tfoot td {
   position: sticky;
@@ -538,9 +517,6 @@ table.data tfoot td {
   cursor: pointer;
 }
 
-.check:hover {
-  background: #f4f6fb;
-}
 
 .check input {
   accent-color: var(--primary);
@@ -560,6 +536,7 @@ table.data tfoot td {
 }
 
 .seg-item {
+  white-space: nowrap;
   padding: 5px 14px;
   border-radius: 7px;
   font-weight: 550;
@@ -568,9 +545,6 @@ table.data tfoot td {
   user-select: none;
 }
 
-.seg-item:hover {
-  color: var(--text);
-}
 
 .seg-item[data-checked] {
   background: var(--surface);
@@ -604,9 +578,6 @@ table.data tfoot td {
   cursor: pointer;
 }
 
-.group-head:hover {
-  background: #eef1fb;
-}
 
 .group-head svg {
   width: 17px;
@@ -659,21 +630,193 @@ table.data tfoot td {
   border-radius: 0;
 }
 
+/* Подсветка при наведении — только там, где есть мышь (на телефоне иначе «залипает» после касания). */
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: var(--primary-hover);
+  }
+  .btn-outline:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    background: #f7f8fb;
+  }
+  .th-btn:hover {
+    color: var(--text);
+  }
+  table.data tbody tr:hover td {
+    background: #fafbff;
+  }
+  table.data tbody tr.row-assembly:hover td {
+    background: #eaeeff;
+  }
+  .check:hover {
+    background: #f4f6fb;
+  }
+  .seg-item:hover {
+    color: var(--text);
+  }
+  .group-head:hover {
+    background: #eef1fb;
+  }
+}
+
+/* Закреплённая первая колонка (название материала остаётся на виду при прокрутке вбок) */
+table.data.sticky-first thead th:first-child,
+table.data.sticky-first tbody td:first-child {
+  position: sticky;
+  left: 0;
+  box-shadow: 1px 0 0 var(--border);
+}
+
+table.data.sticky-first thead th:first-child {
+  z-index: 3;
+}
+
+table.data.sticky-first tbody td:first-child {
+  z-index: 1;
+  background: var(--surface);
+}
+
+table.data.sticky-first tbody tr.row-assembly td:first-child {
+  background: var(--assembly);
+}
+
+.popover-panel {
+  max-height: min(60vh, var(--anchor-max-height, 60vh));
+}
+
 @media (max-width: 720px) {
   .content {
-    padding: 14px 12px 36px;
+    padding: 12px 12px 36px;
+    gap: 12px;
   }
   .topbar {
-    padding: 14px 16px;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .topbar h1 {
+    font-size: 17px;
+  }
+  .topbar p {
+    font-size: 13px;
+  }
+  .panel {
+    padding: 14px;
   }
   .panel-head {
     flex-direction: column;
+    gap: 10px;
   }
+  .panel-tools {
+    width: 100%;
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .panel-tools .btn {
+    justify-content: center;
+  }
+  .seg {
+    display: flex;
+  }
+  .seg-item {
+    flex: 1;
+    text-align: center;
+    padding: 9px 10px;
+  }
+  .file-panel .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Три главные кнопки — в один ряд, значок над подписью */
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .actions .btn {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    height: auto;
+    min-height: 58px;
+    padding: 8px 4px;
+    font-size: 12.5px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+  .actions .btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Сводка расчёта — по две плитки в ряд */
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .stat {
+    padding: 10px 12px;
+  }
+  .stat:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .stat-value {
+    font-size: 19px;
+  }
+
+  .popover-panel {
+    width: min(300px, calc(100vw - 24px));
+  }
+  .pager {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .pager-btns {
+    justify-content: space-between;
+  }
+
   .chips {
     margin-left: 0;
     justify-content: flex-start;
   }
   .group-head {
     flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .group-head svg {
+    margin-top: 2px;
+  }
+  .chips {
+    width: 100%;
+  }
+  .table-wrap {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+}
+
+/* Сенсорные экраны (любой ширины): элементы, на которые нажимают пальцем, — не ниже 40 px */
+@media (pointer: coarse) {
+  .btn-sm {
+    height: 40px;
+  }
+  .seg-item {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+  .th-btn {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .check {
+    padding-top: 9px;
+    padding-bottom: 9px;
   }
 }

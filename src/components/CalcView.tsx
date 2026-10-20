@@ -91,6 +91,7 @@ export function CalcView({ result }: { result: CalcResult }) {
         rows={rows}
         rowKey={(r) => r.key}
         footer={footer}
+        stickyFirst
         maxHeight="60vh"
       />
 
