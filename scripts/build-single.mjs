@@ -35,6 +35,9 @@ const html = template
   .replace('</head>', () => `    <style>${css}</style>\n  </head>`)
   .replace(entryTag, () => `<script>${safeJs}</script>`);
 
-await mkdir(join(root, 'dist'), { recursive: true });
-await writeFile(join(root, 'dist/index.html'), html, 'utf8');
-console.log(`dist/index.html — ${(Buffer.byteLength(html) / 1024).toFixed(0)} КБ`);
+// Копия в docs/ нужна для GitHub Pages: он отдаёт либо корень репозитория, либо папку docs.
+for (const dir of ['dist', 'docs']) {
+  await mkdir(join(root, dir), { recursive: true });
+  await writeFile(join(root, dir, 'index.html'), html, 'utf8');
+}
+console.log(`dist/index.html и docs/index.html — ${(Buffer.byteLength(html) / 1024).toFixed(0)} КБ`);
